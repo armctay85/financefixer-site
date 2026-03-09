@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FinanceFixer — Real Wealth Education</title>
+    <meta name="description" content="Transparent wealth education from someone in the trenches. Real systems, real numbers, no get‑rich‑quick promises.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Archivo:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        /* CSS Reset & Variables */
+        :root {
+            --primary: #1a1a1a;
+            --secondary: #ff4d00;
+            --accent: #00a8ff;
+            --light: #f8f9fa;
+            --dark: #0d0d0d;
+            --gray: #6c757d;
+            --border: rgba(255, 77, 0, 0.2);
+            --font-heading: 'Archivo Black', sans-serif;
+            --font-body: 'Archivo', sans-serif;
+            --font-mono: 'Space Mono', monospace;
+            --shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+            --shadow-heavy: 0 20px 60px rgba(0, 0, 0, 0.15);
+            --radius: 12px;
+            --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: var(--font-body);
+            line-height: 1.7;
+            color: var(--primary);
+            background: var(--light);
+            overflow-x: hidden;
+            font-weight: 400;
+        }
+
+        /* Typography */
+        h1, h2, h3, h4 {
+            font-family: var(--font-heading);
+            line-height: 1.2;
+            margin-bottom: 1.5rem;
+            font-weight: 900;
+        }
+
+        h1 {
+            font-size: 3.5rem;
+            letter-spacing: -0.02em;
+        }
+
+        h2 {
+            font-size: 2.5rem;
+            letter-spacing: -0.01em;
+        }
+
+        h3 {
+            font-size: 1.75rem;
+        }
+
+        p {
+            margin-bottom: 1.5rem;
+            font-size: 1.125rem;
+        }
+
+        .hero-subtitle {
+            font-size: 1.25rem;
+            color: var(--gray);
+            max-width: 700px;
+            margin: 0 auto 2rem;
+        }
+
+        /* Layout */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        section {
+            padding: 6rem 0;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, var(--dark) 0%, #2a2a2a 100%);
+            color: white;
+            padding: 8rem 0 6rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--secondary), var(--accent));
+        }
+
+        .hero h1 {
+            font-size: 4rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .hero h1 span {
+            color: var(--secondary);
+            font-size: 0.8em;
+            opacity: 0.9;
+        }
+
+        /* Warning Banner - Less Prominent */
+        .warning-banner {
+            background: rgba(255, 77, 0, 0.08);
+            border: 1px solid rgba(255, 77, 0, 0.3);
+            border-radius: var(--radius);
+            padding: 1.5rem;
+            margin: 2rem auto 3rem;
+            max-width: 800px;
+            font-size: 0.95rem;
+            color: var(--gray);
+        }
+
+        .warning-banner strong {
+            color: var(--secondary);
+        }
+
+        /* CTA Button */
+        .cta-button {
+            display: inline-block;
+            background: var(--secondary);
+            color: white;
+            padding: 1.25rem 3rem;
+            border-radius: var(--radius);
+            text-decoration: none;
+            font-family: var(--font-heading);
+            font-size: 1.125rem;
+            letter-spacing: 0.5px;
+            transition: var(--transition);
+            border: none;
+            cursor: pointer;
+            box-shadow: var(--shadow);
+        }
+
+        .cta-button:hover {
+            background: #ff3d00;
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-heavy);
+        }
+
+        /* Image Grid */
+        .image-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin: 3rem 0;
+        }
+
+        .image-card {
+            background: white;
+            border-radius: var(--radius);
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+        }
+
+        .image-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-heavy);
+        }
+
+        .image-card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-bottom: 3px solid var(--secondary);
+        }
+
+        .image-card-content {
+            padding: 1.5rem;
+        }
+
+        .image-card h3 {
+            color: var(--secondary);
+            margin-bottom: 0.5rem;
+        }
+
+        /* Value Props */
+        .value-props {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin: 3rem 0;
+        }
+
+        .value-prop {
+            background: white;
+            padding: 2rem;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            border-top: 4px solid var(--accent);
+        }
+
+        .value-prop h3 {
+            color: var(--accent);
+        }
+
+        /* Email Capture */
+        .email-capture {
+            background: linear-gradient(135deg, var(--dark) 0%, #2a2a2a 100%);
+            color: white;
+            padding: 4rem 2rem;
+            border-radius: var(--radius);
+            text-align: center;
+            margin: 4rem 0;
+        }
+
+        .email-capture h2 {
+            color: white;
+        }
+
+        .email-form {
+            max-width: 500px;
+            margin: 2rem auto 0;
+            display: flex;
+            gap: 1rem;
+        }
+
+        .email-input {
+            flex: 1;
+            padding: 1rem 1.5rem;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            border-radius: var(--radius);
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            font-size: 1rem;
+            transition: var(--transition);
+        }
+
+        .email-input:focus {
+            outline: none;
+            border-color: var(--secondary);
+            background: rgba(255, 255, 255, 0.15);
+        }
+
+        /* Footer */
+        footer {
+            background: var(--dark);
+            color: white;
+            padding: 4rem 0 2rem;
+            text-align: center;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+
+        .footer-links a {
+            color: rgba(255, 255, 255, 0.7);
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .footer-links a:hover {
+            color: var(--secondary);
+        }
+
+        .copyright {
+            margin-top: 3rem;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 0.9rem;
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .fade-in {
+            animation: fadeIn 0.8s ease-out forwards;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            h1 { font-size: 2.5rem; }
+            h2 { font-size: 2rem; }
+            .hero { padding: 6rem 0 4rem; }
+            .email-form { flex-direction: column; }
+            .image-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content fade-in">
+                <h1>Real Wealth Education <span>• Not Financial Advice</span></h1>
+                <p class="hero-subtitle">
+                    Transparent education from someone in the trenches. Real systems, real numbers, no get‑rich‑quick promises.
+                </p>
+                <div class="warning-banner">
+                    <strong>Note:</strong> This is educational content based on personal experience. I'm not a licensed financial advisor. Always conduct your own research.
+                </div>
+                <a href="#email-capture" class="cta-button">Get Free Wealth Framework</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Image Showcase -->
+    <section class="container">
+        <h2 class="fade-in">Visual Wealth Education</h2>
+        <p class="hero-subtitle fade-in">Complex concepts made simple through strategic visuals</p>
+        
+        <div class="image-grid">
+            <div class="image-card fade-in">
+                <img src="polymarket_image_1.png" alt="Polymarket Probability Analysis">
+                <div class="image-card-content">
+                    <h3>Finding Mispriced Markets</h3>
+                    <p>Spotting 65% vs 42% probability gaps before they correct. Real arbitrage opportunities in prediction markets.</p>
+                </div>
+            </div>
+            
+            <div class="image-card fade-in">
+                <img src="recovery_image_2.png" alt="Recovery Framework">
+                <div class="image-card-content">
+                    <h3>Systematic Loss Recovery</h3>
+                    <p>From $500 loss to disciplined rebuilding. Risk management frameworks that prevent emotional decisions.</p>
+                </div>
+            </div>
+            
+            <div class="image-card fade-in">
+                <img src="incomestreams_image_1.png" alt="Income Stream Diversification">
+                <div class="image-card-content">
+                    <h3>$100 → 3 Income Streams</h3>
+                    <p>Micro‑investments that compound. Content repurposing, prediction research, and micro‑SaaS foundations.</p>
+                </div>
+            </div>
+            
+            <div class="image-card fade-in">
+                <img src="discipline_image_2.png" alt="Systematic Discipline Framework">
+                <div class="image-card-content">
+                    <h3>Military-Grade Discipline</h3>
+                    <p>Applying systematic, regimented approaches to wealth building. Daily/weekly/monthly routines that compound.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Value Propositions -->
+    <section class="container">
+        <h2 class="fade-in">What You'll Learn</h2>
+        <p class="hero-subtitle fade-in">Practical frameworks, not theory</p>
+        
+        <div class="value-props">
+            <div class="value-prop fade-in">
+                <h3>Edge Finding</h3>
+                <p>How to identify mispriced opportunities in prediction markets before they correct. Real‑time data analysis techniques.</p>
+            </div>
+            
+            <div class="value-prop fade-in">
+                <h3>Risk Management</h3>
+                <p>Systematic approaches to position sizing, stop‑losses, and emotional discipline. Recover from losses without panic.</p>
+            </div>
+            
+            <div class="value-prop fade-in">
+                <h3>Income Diversification</h3>
+                <p>Turning $100 into multiple revenue streams. Content, research, and micro‑business frameworks that scale.</p>
+            </div>
+            
+            <div class="value-prop fade-in">
+                <h3>Military Discipline</h3>
+                <p>Applying systematic, regimented approaches to wealth building. Daily/weekly/monthly routines that compound.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Email Capture -->
+    <section id="email-capture" class="container">
+        <div class="email-capture fade-in">
+            <h2>Get the Free Wealth Framework</h2>
+            <p>Join 2,000+ others learning systematic wealth building. No spam, just actionable education.</p>
+            
+            <form class="email-form" action="#" method="POST">
+                <input type="email" class="email-input" placeholder="Your email address" required>
+                <button type="submit" class="cta-button">Get Free Access</button>
+            </form>
+            
+            <p style="margin-top: 1.5rem; font-size: 0.9rem; opacity: 0.8;">
+                By subscribing, you agree to receive educational content. Unsubscribe anytime.
+            </p>
+        </div>
+    </section>
+
+    <!-- Final Note -->
+    <section class="container">
+        <div class="fade-in" style="background: rgba(255, 77, 0, 0.05); padding: 2.5rem; border-radius: var(--radius); border-left: 4px solid var(--secondary);">
+            <h3 style="color: var(--secondary);">Transparency First</h3>
+            <p>This is education. This is transparency. This is my journey.</p>
+            <p style="margin-top: 1rem;"><strong>Your journey will be different.</strong> Your risks are yours. Your decisions are yours. This content is for educational purposes based on personal experience.</p>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <h3>FinanceFixer</h3>
+            <p style="opacity: 0.8; max-width: 600px; margin: 0 auto;">Real wealth education for those tired of get‑rich‑quick schemes.</p>
+            
+            <div class="footer-links">
+                <a href="#">Privacy Policy</a>
+                <a href="#">Terms of Service</a>
+                <a href="#">Disclaimer</a>
+                <a href="#">Contact</a>
+            </div>
+            
+            <div class="copyright">
+                &copy; 2026 FinanceFixer. All content is for educational purposes. Not financial advice.
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Simple fade-in on scroll
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('fade-in');
+                }
+            });
+        }, observerOptions);
+
+        // Observe all sections
+        document.querySelectorAll('section').forEach(section => {
+            observer.observe(section);
+        });
+
+        // Form submission
+        document.querySelector('.email-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const email = this.querySelector('.email-input').value;
+            alert(`Thanks! The Wealth Framework will be sent to ${email}`);
+            this.querySelector('.email-input').value = '';
+        });
+    </script>
+</body>
+</html>
