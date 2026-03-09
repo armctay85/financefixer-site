@@ -1,0 +1,852 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FinanceFixer — Real Wealth Education (Not Financial Advice)</title>
+    <meta name="description" content="Transparent wealth education from someone in the trenches. Real systems, real numbers, no get‑rich‑quick promises. NOT financial advice.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Archivo:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        /* CSS Reset & Variables */
+        :root {
+            --primary: #1a1a1a;
+            --secondary: #ff4d00;
+            --accent: #00a8ff;
+            --light: #f8f9fa;
+            --dark: #0d0d0d;
+            --gray: #6c757d;
+            --border: rgba(255, 77, 0, 0.2);
+            --font-heading: 'Archivo Black', sans-serif;
+            --font-body: 'Archivo', sans-serif;
+            --font-mono: 'Space Mono', monospace;
+            --shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+            --shadow-heavy: 0 20px 60px rgba(0, 0, 0, 0.15);
+            --radius: 12px;
+            --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: var(--font-body);
+            line-height: 1.7;
+            color: var(--primary);
+            background: var(--light);
+            overflow-x: hidden;
+            font-weight: 400;
+        }
+
+        /* Typography */
+        h1, h2, h3, h4 {
+            font-family: var(--font-heading);
+            line-height: 1.2;
+            margin-bottom: 1rem;
+        }
+
+        h1 {
+            font-size: clamp(2.5rem, 5vw, 4.5rem);
+            letter-spacing: -0.03em;
+        }
+
+        h2 {
+            font-size: clamp(2rem, 4vw, 3.2rem);
+            letter-spacing: -0.02em;
+        }
+
+        h3 {
+            font-size: clamp(1.5rem, 3vw, 2.2rem);
+        }
+
+        p {
+            margin-bottom: 1.5rem;
+            font-size: 1.125rem;
+            color: var(--gray);
+        }
+
+        .mono {
+            font-family: var(--font-mono);
+            font-size: 0.95rem;
+            letter-spacing: -0.01em;
+        }
+
+        /* Layout */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        section {
+            padding: 6rem 0;
+        }
+
+        /* Header */
+        .header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--border);
+            padding: 1.5rem 0;
+            transition: var(--transition);
+        }
+
+        .header.scrolled {
+            padding: 1rem 0;
+            box-shadow: var(--shadow);
+        }
+
+        .nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-family: var(--font-heading);
+            font-size: 1.8rem;
+            color: var(--primary);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .logo span {
+            color: var(--secondary);
+        }
+
+        .logo::after {
+            content: '⚠️';
+            font-size: 1rem;
+            margin-left: 0.5rem;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2.5rem;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1rem;
+            position: relative;
+            transition: var(--transition);
+        }
+
+        .nav-links a:hover {
+            color: var(--secondary);
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--secondary);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .cta-button {
+            display: inline-block;
+            background: var(--secondary);
+            color: white;
+            padding: 0.9rem 2.2rem;
+            font-family: var(--font-heading);
+            font-size: 1rem;
+            text-decoration: none;
+            border-radius: 50px;
+            border: 2px solid var(--secondary);
+            transition: var(--transition);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .cta-button:hover {
+            background: transparent;
+            color: var(--secondary);
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-heavy);
+        }
+
+        /* Hero */
+        .hero {
+            padding-top: 12rem;
+            padding-bottom: 8rem;
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -20%;
+            width: 80%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255, 77, 0, 0.05) 0%, transparent 70%);
+            z-index: 0;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            max-width: 800px;
+        }
+
+        .hero h1 {
+            margin-bottom: 1.5rem;
+        }
+
+        .hero h1 span {
+            color: var(--secondary);
+            position: relative;
+        }
+
+        .hero h1 span::after {
+            content: '';
+            position: absolute;
+            bottom: 5px;
+            left: 0;
+            width: 100%;
+            height: 8px;
+            background: rgba(255, 77, 0, 0.2);
+            z-index: -1;
+        }
+
+        .hero-subtitle {
+            font-size: 1.4rem;
+            color: var(--gray);
+            margin-bottom: 2.5rem;
+            max-width: 600px;
+        }
+
+        .warning-banner {
+            background: rgba(255, 77, 0, 0.1);
+            border-left: 4px solid var(--secondary);
+            padding: 1.5rem;
+            border-radius: var(--radius);
+            margin: 3rem 0;
+            font-weight: 600;
+            color: var(--primary);
+        }
+
+        /* Systems */
+        .systems {
+            background: var(--dark);
+            color: white;
+            position: relative;
+        }
+
+        .systems::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('data:image/svg+xml,<svg width="20" height="20" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><rect width="1" height="1" fill="rgba(255,255,255,0.03)"/></svg>');
+            z-index: 0;
+        }
+
+        .systems .container {
+            position: relative;
+            z-index: 1;
+        }
+
+        .systems h2 {
+            color: white;
+            text-align: center;
+            margin-bottom: 1rem;
+        }
+
+        .systems-subtitle {
+            text-align: center;
+            color: rgba(255, 255, 255, 0.7);
+            margin-bottom: 4rem;
+            font-size: 1.2rem;
+        }
+
+        .systems-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2.5rem;
+            margin-top: 3rem;
+        }
+
+        .system-card {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: var(--radius);
+            padding: 2.5rem;
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .system-card:hover {
+            transform: translateY(-10px);
+            border-color: var(--secondary);
+            box-shadow: 0 20px 40px rgba(255, 77, 0, 0.1);
+        }
+
+        .system-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: var(--secondary);
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+        }
+
+        .system-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .system-number {
+            font-family: var(--font-mono);
+            font-size: 0.9rem;
+            color: var(--secondary);
+            margin-bottom: 1rem;
+            display: block;
+        }
+
+        .system-card h3 {
+            color: white;
+            margin-bottom: 1rem;
+        }
+
+        .system-card p {
+            color: rgba(255, 255, 255, 0.7);
+            margin-bottom: 1.5rem;
+        }
+
+        .system-stats {
+            display: flex;
+            gap: 2rem;
+            margin-top: 1.5rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .stat {
+            font-family: var(--font-mono);
+        }
+
+        .stat-value {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: white;
+            display: block;
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        /* CTA */
+        .cta {
+            text-align: center;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--dark) 100%);
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(0, 168, 255, 0.1) 0%, transparent 70%);
+            animation: pulse 15s infinite linear;
+        }
+
+        @keyframes pulse {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .cta-content {
+            position: relative;
+            z-index: 1;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .cta h2 {
+            color: white;
+            margin-bottom: 1.5rem;
+        }
+
+        .cta p {
+            color: rgba(255, 255, 255, 0.8);
+            margin-bottom: 3rem;
+            font-size: 1.2rem;
+        }
+
+        .email-form {
+            display: flex;
+            gap: 1rem;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        .email-input {
+            flex: 1;
+            padding: 1rem 1.5rem;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            border-radius: 50px;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            font-family: var(--font-body);
+            font-size: 1rem;
+            transition: var(--transition);
+        }
+
+        .email-input:focus {
+            outline: none;
+            border-color: var(--accent);
+            background: rgba(255, 255, 255, 0.15);
+        }
+
+        .email-input::placeholder {
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        /* Footer */
+        .footer {
+            background: var(--dark);
+            color: white;
+            padding: 4rem 0 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 3rem;
+            margin-bottom: 3rem;
+        }
+
+        .footer-logo {
+            font-family: var(--font-heading);
+            font-size: 1.8rem;
+            color: white;
+            margin-bottom: 1rem;
+            display: block;
+        }
+
+        .footer-links {
+            display: flex;
+            flex-direction: column;
+            gap: 0.8rem;
+        }
+
+        .footer-links a {
+            color: rgba(255, 255, 255, 0.7);
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .footer-links a:hover {
+            color: var(--secondary);
+            padding-left: 5px;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 0.9rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+            
+            .email-form {
+                flex-direction: column;
+            }
+            
+            .email-input, .cta-button {
+                width: 100%;
+            }
+            
+            section {
+                padding: 4rem 0;
+            }
+            
+            .hero {
+                padding-top: 10rem;
+                padding-bottom: 6rem;
+            }
+        }
+
+        /* Animations */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header" id="header">
+        <div class="container">
+            <nav class="nav">
+                <a href="#" class="logo">Finance<span>Fixer</span></a>
+                <div class="nav-links">
+                    <a href="#systems">Systems</a>
+                    <a href="#story">Story</a>
+                    <a href="#cta">Get Started</a>
+                    <a href="https://tiktok.com/@financefixerau" target="_blank">TikTok →</a>
+                    <a href="#cta" class="cta-button">Free Guide</a>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content fade-in">
+                <h1>Real Wealth Education <span>(Not Financial Advice)</span></h1>
+                <p class="hero-subtitle">
+                    Transparent education from someone in the trenches. Real systems, real numbers, no get‑rich‑quick promises.
+                </p>
+                <div class="warning-banner">
+                    ⚠️ IMPORTANT: This is NOT financial advice. I'm not a licensed financial advisor. 
+                    I'm sharing my personal journey for educational purposes only. Always do your own research.
+                </div>
+                <a href="#cta" class="cta-button">Get System 1 Guide Free</a>
+                <p class="mono" style="margin-top: 2rem; color: var(--gray);">
+                    Found my TikTok? Good. That's the tip of the iceberg. Here's where the real education happens.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Story -->
+    <section class="container" id="story">
+        <div class="fade-in">
+            <h2>From $27k Debt to Building Wealth Systems</h2>
+            <div style="background: rgba(255, 77, 0, 0.05); padding: 2.5rem; border-radius: var(--radius); margin: 2.5rem 0;">
+                <h3>📊 The Numbers (Transparent):</h3>
+                <ul style="list-style: none; margin: 1.5rem 0;">
+                    <li style="margin-bottom: 0.8rem; padding-left: 1.5rem; position: relative;">
+                        <span style="position: absolute; left: 0; color: var(--secondary);">✅</span> Graduated 2025 with $27,000 student debt
+                    </li>
+                    <li style="margin-bottom: 0.8rem; padding-left: 1.5rem; position: relative;">
+                        <span style="position: absolute; left: 0; color: var(--secondary);">✅</span> No job offers in my field
+                    </li>
+                    <li style="margin-bottom: 0.8rem; padding-left: 1.5rem; position: relative;">
+                        <span style="position: absolute; left: 0; color: var(--secondary);">✅</span> Month 1: Pure panic
+                    </li>
+                    <li style="margin-bottom: 0.8rem; padding-left: 1.5rem; position: relative;">
+                        <span style="position: absolute; left: 0; color: var(--secondary);">✅</span> Solution: Built 3 survival systems with $100 total
+                    </li>
+                    <li style="margin-bottom: 0.8rem; padding-left: 1.5rem; position: relative;">
+                        <span style="position: absolute; left: 0; color: var(--secondary);">✅</span> Now sharing transparently so you can learn from my journey
+                    </li>
+                </ul>
+            </div>
+            <p>When traditional paths failed, I had to build my own. No connections, no trust fund, just systems that actually work.</p>
+        </div>
+    </section>
+
+    <!-- Systems -->
+    <section class="systems" id="systems">
+        <div class="container">
+            <h2 class="fade-in">The 3 Systems That Kept Me Afloat</h2>
+            <p class="systems-subtitle fade-in">Each system started with less than $50. Each paid a different bill. Each taught me something valuable.</p>
+            
+            <div class="systems-grid">
+                <!-- System 1 -->
+                <div class="system-card fade-in">
+                    <span class="system-number">SYSTEM 01</span>
+                    <h3>AI Content Repurposing</h3>
+                    <p>Turn existing content into multiple income streams. No filming, no scripting—just smart repackaging.</p>
+                    <div class="system-stats">
+                        <div class="stat">
+                            <span class="stat-value">$20/day</span>
+                            <span class="stat-label">From YouTube + TikTok</span>
+                        </div>
+                        <div class="stat">
+                            <span class="stat-value">30 days</span>
+                            <span class="stat-label">To first dollar</span>
+                        </div>
+                    </div>
+                    <a href="system1_ai_content_repurposing.md" style="color: var(--secondary); text-decoration: none; font-weight: 600; margin-top: 1.5rem; display: inline-block;">
+                        Read detailed guide →
+                    </a>
+                </div>
+                
+                <!-- System 2 -->
+                <div class="system-card fade-in">
+                    <span class="system-number">SYSTEM 02</span>
+                    <h3>Prediction Market Research</h3>
+                    <p>Find probability gaps between platforms. Capitalize on mispriced markets before they correct.</p>
+                    <div class="system-stats">
+                        <div class="stat">
+                            <span class="stat-value">$412</span>
+                            <span class="stat-label">From $10 in 3 weeks</span>
+                        </div>
+                        <div class="stat">
+                            <span class="stat-value">7 days</span>
+                            <span class="stat-label">To first dollar</span>
+                        </div>
+                    </div>
+                    <a href="system2_prediction_markets.md" style="color: var(--secondary); text-decoration: none; font-weight: 600; margin-top: 1.5rem; display: inline-block;">
+                        Read detailed guide →
+                    </a>
+                </div>
+                
+                <!-- System 3 -->
+                <div class="system-card fade-in">
+                    <span class="system-number">SYSTEM 03</span>
+                    <h3>Micro‑SaaS Validation</h3>
+                    <p>Test business ideas before building. Validate demand with real customers, not guesses.</p>
+                    <div class="system-stats">
+                        <div class="stat">
+                            <span class="stat-value">$100</span>
+                            <span class="stat-label">Pre‑sales validation</span>
+                        </div>
+                        <div class="stat">
+                            <span class="stat-value">14 days</span>
+                            <span class="stat-label">To first dollar</span>
+                        </div>
+                    </div>
+                    <a href="system3_micro_saas_validation.md" style="color: var(--secondary); text-decoration: none; font-weight: 600; margin-top: 1.5rem; display: inline-block;">
+                        Read detailed guide →
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Differentiators -->
+    <section class="container">
+        <div class="fade-in">
+            <h2>What Makes This Different?</h2>
+            <p style="margin-bottom: 3rem;">No fluff, no rounding up, no hidden failures.</p>
+            
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem;">
+                <div style="text-align: center; padding: 2rem; border: 1px solid var(--border); border-radius: var(--radius);">
+                    <div style="font-size: 2.5rem; margin-bottom: 1rem;">📈</div>
+                    <h3>Transparent Numbers</h3>
+                    <p>Good and bad. Wins and losses. No rounding up.</p>
+                </div>
+                
+                <div style="text-align: center; padding: 2rem; border: 1px solid var(--border); border-radius: var(--radius);">
+                    <div style="font-size: 2.5rem; margin-bottom: 1rem;">🔧</div>
+                    <h3>Actual Systems</h3>
+                    <p>Not theory. Systems I actually use and refine daily.</p>
+                </div>
+                
+                <div style="text-align: center; padding: 2rem; border: 1px solid var(--border); border-radius: var(--radius);">
+                    <div style="font-size: 2.5rem; margin-bottom: 1rem;">💡</div>
+                    <h3>Mistakes Included</h3>
+                    <p>Learn from my errors so you don't make them.</p>
+                </div>
+                
+                <div style="text-align: center; padding: 2rem; border: 1px solid var(--border); border-radius: var(--radius);">
+                    <div style="font-size: 2.5rem; margin-bottom: 1rem;">🔄</div>
+                    <h3>Continuous Learning</h3>
+                    <p>Systems evolve. I update when I'm wrong.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="cta" id="cta">
+        <div class="container">
+            <div class="cta-content fade-in">
+                <h2>Ready for Real Education?</h2>
+                <p>Get detailed guides, templates, and ongoing updates. No fluff, just actionable systems.</p>
+                
+                <form class="email-form" id="email-form">
+                    <input type="email" class="email-input" placeholder="Your email address" required>
+                    <button type="submit" class="cta-button">Get System 1 Guide Free</button>
+                </form>
+                
+                <p style="margin-top: 2rem; font-size: 0.9rem; color: rgba(255, 255, 255, 0.6);">
+                    You'll also get updates on Systems 2 & 3 as they're released. No spam, ever.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- TikTok Flow -->
+    <section class="container">
+        <div class="fade-in">
+            <h2>TikTok → Deep Content Flow</h2>
+            <p style="margin-bottom: 3rem;">From quick hooks to detailed implementation.</p>
+            
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.5rem; text-align: center;">
+                <div style="padding: 1.5rem;">
+                    <div style="font-size: 2rem; margin-bottom: 1rem; color: var(--secondary);">1️⃣</div>
+                    <h3>TikTok Post</h3>
+                    <p>Hook + basic concept</p>
+                </div>
+                
+                <div style="padding: 1.5rem;">
+                    <div style="font-size: 2rem; margin-bottom: 1rem; color: var(--secondary);">2️⃣</div>
+                    <h3>This Page</h3>
+                    <p>Detailed explanation</p>
+                </div>
+                
+                <div style="padding: 1.5rem;">
+                    <div style="font-size: 2rem; margin-bottom: 1rem; color: var(--secondary);">3️⃣</div>
+                    <h3>Email Course</h3>
+                    <p>Step‑by‑step implementation</p>
+                </div>
+                
+                <div style="padding: 1.5rem;">
+                    <div style="font-size: 2rem; margin-bottom: 1rem; color: var(--secondary);">4️⃣</div>
+                    <h3>Community</h3>
+                    <p>Discussion + support</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Final Disclaimer -->
+    <section class="container">
+        <div class="fade-in" style="background: #fff8e1; border: 2px solid #ffd54f; padding: 2.5rem; border-radius: var(--radius);">
+            <h2 style="color: #e65100;">⚠️ Final Reminder: NOT FINANCIAL ADVICE</h2>
+            <p>This is education. This is transparency. This is my journey.</p>
+            <p style="margin-top: 1rem;"><strong>Your journey will be different.</strong> Your risks are yours. Your decisions are yours.</p>
+            <p style="margin-top: 1rem;">Always consult with qualified professionals before making financial decisions.</p>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div>
+                    <a href="#" class="footer-logo">FinanceFixer</a>
+                    <p style="color: rgba(255, 255, 255, 0.7); margin-bottom: 1.5rem;">
+                        Fixing financial literacy through real education.
+                    </p>
+                </div>
+                
+                <div>
+                    <h3 style="color: white; margin-bottom: 1.5rem;">Quick Links</h3>
+                    <div class="footer-links">
+                        <a href="#systems">Systems</a>
+                        <a href="#story">My Story</a>
+                        <a href="#cta">Get Started</a>
+                        <a href="https://tiktok.com/@financefixerau" target="_blank">TikTok</a>
+                    </div>
+                </div>
+                
+                <div>
+                    <h3 style="color: white; margin-bottom: 1.5rem;">Legal</h3>
+                    <div class="footer-links">
+                        <a href="#">Privacy Policy</a>
+                        <a href="#">Terms of Service</a>
+                        <a href="#">Disclaimer</a>
+                        <a href="#">Contact</a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>© 2026 FinanceFixer. All content for educational purposes only.</p>
+                <p style="margin-top: 0.5rem;">Built with OpenClaw 🦞</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Scroll header effect
+        window.addEventListener('scroll', () => {
+            const header = document.getElementById('header');
+            if (window.scrollY > 50) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
+
+        // Fade-in animation
+        const fadeElements = document.querySelectorAll('.fade-in');
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, { threshold: 0.1 });
+
+        fadeElements.forEach(el => observer.observe(el));
+
+        // Email form submission
+        document.getElementById('email-form').addEventListener('submit', (e) => {
+            e.preventDefault();
+            const email = e.target.querySelector('.email-input').value;
+            if (email) {
+                alert(`Thanks! System 1 guide sent to ${email} (placeholder – real integration coming soon).`);
+                e.target.reset();
+            }
+        });
+
+        // Smooth scroll for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href');
+                if (targetId === '#') return;
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 100,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
