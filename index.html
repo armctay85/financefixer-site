@@ -400,8 +400,10 @@
             <h2>Get the Free Wealth Framework</h2>
             <p>Join 2,000+ others learning systematic wealth building. No spam, just actionable education.</p>
             
-            <form class="email-form" action="#" method="POST">
-                <input type="email" class="email-input" placeholder="Your email address" required>
+            <form class="email-form" action="https://formspree.io/f/mqazvqjq" method="POST">
+                <input type="email" name="email" class="email-input" placeholder="Your email address" required>
+                <input type="hidden" name="_subject" value="New FinanceFixer Subscriber">
+                <input type="hidden" name="_replyto" value="{{email}}">
                 <button type="submit" class="cta-button">Get Free Access</button>
             </form>
             
@@ -459,13 +461,18 @@
             observer.observe(section);
         });
 
-        // Form submission
-        document.querySelector('.email-form').addEventListener('submit', function(e) {
-            e.preventDefault();
-            const email = this.querySelector('.email-input').value;
-            alert(`Thanks! The Wealth Framework will be sent to ${email}`);
-            this.querySelector('.email-input').value = '';
+        // Form submission success message
+        document.querySelector('.email-form').addEventListener('submit', function() {
+            // Formspree will handle the submission and redirect
+            // We'll show a success message after redirect
+            localStorage.setItem('formSubmitted', 'true');
         });
+
+        // Check if form was just submitted
+        if (localStorage.getItem('formSubmitted') === 'true') {
+            localStorage.removeItem('formSubmitted');
+            // Could show a success message here if needed
+        }
     </script>
 </body>
 </html>
